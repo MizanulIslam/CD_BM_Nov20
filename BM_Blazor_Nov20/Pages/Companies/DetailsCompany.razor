@@ -1,0 +1,174 @@
+﻿
+@page "/DetailsCompany/{Id}"
+@using BM_Blazor_Nov20.Data
+@using BM_Models
+
+@inject CompanyServices objCompanyServices
+@inject NavigationManager objNavigationManager
+@attribute [Authorize]
+
+<h3>Details</h3>
+<hr />
+
+
+<form>
+    @if (objCompany == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        @*<table>
+                <tr>
+                    <td>
+                        Company ID :
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <strong>
+                            @objCompany.CompanyId
+                        </strong>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Company Name :
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <strong>
+                            @objCompany.Name
+                        </strong>
+
+                    </td>
+                </tr>
+            </table>*@
+
+
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group form-inline ">
+                    <label class=" col-md-3">Name</label>
+                    <label class=" col-md-5">@objCompany.Name</label>
+
+
+
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Billing Address</label>
+                    <label class=" col-md-5">@objCompany.BillingAddress</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-md-3">City</label>
+                    <label class=" col-md-5">@objCompany.City </label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Country</label>
+                    <label class=" col-md-5">@objCompany.Country</label>
+                </div>
+
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Contact Name</label>
+                    <label class=" col-md-5">@objCompany.ContactPerson</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Contact Number</label>
+                    <label class=" col-md-5">@objCompany.ContactNumber</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Contact Title</label>
+                    <label class=" col-md-5">@objCompany.ContactTitle</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Email ID</label>
+                    <label class=" col-md-5">@objCompany.EmailID</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Busines ID</label>
+                    <label class=" col-md-5">@objCompany.BusinessID</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">#order</label>
+                    <label class=" col-md-5">@objCompany.OrderCount </label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-md-3">#invoice</label>
+                    <label class=" col-md-5">@objCompany.InvoiceCount </label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-md-3">Total</label>
+                    <label class=" col-md-5">@objCompany.TotalInvoiceAmount </label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-md-3">Paid</label>
+                    <label class=" col-md-5">@objCompany.PaidInvoiceAmount </label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Balance</label>
+                    <label class=" col-md-5">@objCompany.BalanceAmount</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Date Added</label>
+                    <label class=" col-md-5">@objCompany.DateCreated.ToLocalTime()</label>
+                </div>
+                <div class="form-group form-inline">
+                    <label class=" col-md-3">Date Modified</label>
+                    <label class=" col-md-5">@objCompany.DateLastModified.ToLocalTime()</label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="offset-md-3 col-md-4">
+                <div class="form-group of">
+                    <input type="button" class="btn btn-dark" @onclick="@Edit" value="Edit" />
+                    <input type="button" class="btn btn-danger" @onclick="@DeleteCompany" value="Delete" />
+                    <input type="button" class="btn btn-dark" @onclick="@Cancel" value="Back" />
+                </div>
+
+            </div>
+
+        </div>
+    }
+</form>
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+
+    private Company objCompany;
+
+    protected override async Task OnInitializedAsync()
+    {
+        objCompany = await Task.Run(() => objCompanyServices.GetCompany(Id));
+    }
+
+
+    protected void DeleteCompany()
+    {
+
+        var result = objCompanyServices.DeleteCompany(objCompany.CompanyId);
+        if (result == true)
+        {
+
+            objNavigationManager.NavigateTo("Companies");
+        }
+
+    }
+    protected void Edit()
+    {
+        var url = "EditCompany/" + Id;
+        objNavigationManager.NavigateTo(url);
+    }
+    protected void Cancel()
+    {
+        objNavigationManager.NavigateTo("Companies");
+    }
+}

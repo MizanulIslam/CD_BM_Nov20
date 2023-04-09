@@ -1,0 +1,17 @@
+User Cookie Connection String Error
+
+
+Employee List page
+	EMployee Sorting
+	Employee Paging 
+	Employee 
+
+
+Emplye Details
+
+	Delete Confirm Dialog -- Done
+
+Emp  Edit
+
+	Update Response
+	Creation Response

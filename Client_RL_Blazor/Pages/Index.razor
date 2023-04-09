@@ -1,0 +1,28 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+
+
+<h1>Hello, world!</h1>
+
+    Welcome to your new Client app.
+
+
+
+<button class="btn btn-primary" @onclick="MethodToTriggerUrl">Click me</button>
+
+
+@code {
+
+    public string value = "client_name";
+    public string id = "client_uid_1234567890";
+    public string url = "http://localhost:62084/";
+    public string urlMulti = "http://localhost:59261/";
+    
+    void MethodToTriggerUrl()
+    {
+        //NavigationManager.NavigateTo  ("http://localhost:62084/", true);
+        NavigationManager.NavigateTo(urlMulti +$"{value}/{id}",true);
+
+    }
+}

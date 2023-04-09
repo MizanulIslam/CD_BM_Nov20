@@ -1,0 +1,398 @@
+﻿@page "/EmployeeDetails/{id}"
+@using BlazorComponents
+
+@inherits EmployeeDetailsBase
+@attribute [Authorize]
+
+<h3>Employee Details</h3>
+<hr />
+@if (objEmployee == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+
+    @*<div class="card">
+            <div class="card-header">Header</div>
+            <div class="card-body">Content</div>
+            <div class="card-footer">Footer</div>
+        </div>*@
+
+<div class="card-deck">
+
+
+    <div class="card">
+        @*<img class="card-img-top" src="@objEmployee.PhotoPath" />*@
+        @*<div class="card-header">
+                <h5 class="card-title">
+                    @objEmployee.TitleOfCourtesy @objEmployee.FirstName @objEmployee.LastName
+                </h5>
+            </div>*@
+        <div class="card-body">
+
+            <table>
+                <tr>
+                    <td>
+                        <h5 class="card-title">
+                            @*@objEmployee.TitleOfCourtesy*@ @objEmployee.FirstName @objEmployee.LastName
+                        </h5>
+
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @*
+        <h6>
+
+            Home Phone: @objEmployee.HomePhone
+        </h6>
+        <h6>
+            Gender: @objEmployee.Gender
+
+
+        </h6>*@
+                                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <h6>
+
+                            @objEmployee.Address
+                        </h6>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Birth Date : @objEmployee.BirthDate.Date.ToLocalTime().ToShortDateString()</h6>
+
+                    </td>
+
+                </tr>
+            </table>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <table>
+                <tr>
+                    <td>
+                        <h6>
+                            Employee Number :
+                        </h6>
+                    </td>
+                    <td>
+                        <h6>
+                            @objEmployee.EmployeeNumber
+                        </h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>
+                            Email-ID    :
+                        </h6>
+                    </td>
+                    <td>
+                        <h6>
+                            @objEmployee.EmailID
+                        </h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>
+                            Contact Number  :
+                        </h6>
+                    </td>
+                    <td>
+                        <h6>
+
+                            @objEmployee.ContactNumber
+                        </h6>
+                    </td>
+
+                </tr>
+                @*<tr>
+            <td>
+                <h6>Job Level</h6>
+
+            </td>
+            <td>
+                <h6>@objEmployee.Joblevel</h6>
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <h6>Title</h6>
+
+            </td>
+            <td>
+                <h6>@objEmployee.JobTitle</h6>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <h6>Reports To</h6>
+
+            </td>
+            <td>
+                <h6>@objEmployee.ReportsTo </h6>
+
+            </td>
+        </tr>*@
+                <tr>
+                    <td>
+                        <h6>Branch</h6>
+
+                    </td>
+                    <td>
+                        <h6>@objEmployee.Region</h6>
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <h6>Joining Date</h6>
+
+                    </td>
+                    <td>
+                        <h6>@objEmployee.HireDate.Date.ToLocalTime().ToShortDateString()</h6>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Created by</h6>
+
+                    </td>
+                    <td>
+                        <h6>@objEmployee.CreatedBy</h6>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6> Date Created</h6>
+
+                    </td>
+                    <td>
+                        <h6>@objEmployee.DateCreated.Date.ToLocalTime().ToShortDateString()</h6>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Date Modified</h6>
+
+                    </td>
+                    <td>
+                        <h6>@objEmployee.DateLastModified.Date.ToLocalTime().ToShortDateString()</h6>
+
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+        </div>
+    </div>
+    @*@if ((objEmployee.PhotoPath) != null )
+    {
+
+        <div class=" card col-md-3">
+            <div class="card-body">
+                <img class="card-img-top imageThumbnail"
+                     src="@objEmployee.PhotoPath"  alt="No image"/>
+            </div>
+        </div>
+    }*@
+        @*<div class="card">
+                <div class="card-columns">
+                    <h5 class="card-title">@objEmployee.TitleOfCourtesy @objEmployee.FirstName @objEmployee.LastName</h5>
+                    <div class="card">
+                        <h6>Level</h6>
+                        <h6>@objEmployee.Joblevel</h6>
+                    </div>
+                    <div class="card bg-info">
+
+                        <h6>Title</h6>
+                        <h6>@objEmployee.JobTitle</h6>
+                    </div>
+                    <div class="card bg-primary">
+
+                        <h6>Reports To</h6>
+                        <h6>@objEmployee.EmployeeHead</h6>
+                    </div>
+                    <div class="card">
+                        <h6>Created</h6>
+                        <h6>@objEmployee.DateCreated</h6>
+
+                    </div>
+                    <div class="card">
+                        <h6>Created</h6>
+                        <h6>@objEmployee.DateCreated</h6>
+
+                    </div>
+                </div>
+
+            </div>*@
+
+    </div>
+    <br />
+    @*@if (objEmployee.Notes != null)
+    {
+        <div class=" card ">
+            <div class=" card-body ">
+
+                @objEmployee.Notes
+            </div>
+
+        </div>
+    }*@
+
+
+    <!--<div class="row  ">
+    <div class="">
+
+
+
+        <div class="form-group form-inline ">-->
+    @*<label class=" col-md-3">Name</label>*@
+    <!--<strong class="col-md-3">Name</strong>-->
+    @*   <label class=" col-md-5">@objEmployee.TitleOfCourtesy @objEmployee.FirstName @objEmployee.LastName  </label>*@
+
+    <!--<label>
+
+
+            <strong class="col-md-5">@objEmployee.TitleOfCourtesy @objEmployee.FirstName @objEmployee.LastName</strong>
+        </label>
+    </div>
+
+
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Contact Number</label>*@
+    <!--Contact Number
+        <label class=" col-md-5">@objEmployee.ContactNumber</label>
+    </div>
+
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Email ID</label>*@
+    <!--Email ID
+        <label class=" col-md-5">@objEmployee.EmailID</label>
+    </div>
+
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Address</label>*@
+    <!--Address      :
+        <label class=" col-md-5">@objEmployee.Address</label>
+    </div>
+    <div class="form-group form-inline">-->
+    @*<label class="col-md-3">City</label>*@
+    <!--City        :
+        <label class=" col-md-5">@objEmployee.City </label>
+    </div>
+    <div class="form-group form-inline">-->
+    @*  <label class=" col-md-3">Country</label>*@
+    <!--Country     :
+        <label class=" col-md-5">@objEmployee.Country</label>
+    </div>
+
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Job Title</label>*@
+    <!--Job Title   :
+        <label class=" col-md-5">@objEmployee.JobTitle</label>
+    </div>
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Job Level</label>*@
+    <!--Job Level   :
+        <label class=" col-md-5">@objEmployee.Joblevel</label>
+    </div>
+    <div class="form-group form-inline">-->
+    @*<label class=" col-md-3">Notes</label>*@
+    <!--Notes       :
+        <label class=" col-md-5">@objEmployee.Notes</label>
+    </div>
+    <div class="form-group form-inline">
+        Reports To  :-->
+    @*<label class=" col-md-3">Reports To</label>*@
+    <!--<label class=" col-md-5">@objEmployee.ReportsTo </label>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-md-3">Region</label>
+                <label class=" col-md-5">@objEmployee.Region </label>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-md-3">Joining Date</label>
+                <label class=" col-md-5">@objEmployee.HireDate </label>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-md-3">Home Phone</label>
+                <label class=" col-md-5">@objEmployee.HomePhone </label>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-md-3">PhotoPath</label>
+                <label class=" col-md-5">@objEmployee.PhotoPath </label>
+            </div>
+            <div class="form-group form-inline">
+                <label class=" col-md-3">Gender</label>
+                <label class=" col-md-5">@objEmployee.Gender</label>
+            </div>
+            <div class="form-group form-inline">
+                <label class=" col-md-3">Date Added</label>
+                <label class=" col-md-5">@objEmployee.DateCreated.ToLocalTime()</label>
+            </div>
+            <div class="form-group form-inline">
+                <label class=" col-md-3">Date Modified</label>
+                <label class=" col-md-5">@objEmployee.DateLastModified.ToLocalTime()</label>
+            </div>
+        </div>
+
+
+    </div>-->
+
+    <div class="row">
+        <div class=" col-md-4">
+            <br />
+            <div class="">
+
+                <input type="button" class="btn btn-primary" @onclick="@Edit_Click" value="Edit" />
+                <input type="button" class="btn btn-danger" @onclick="@Delete_Click" value="Delete" />
+                @*<input type="button" class="btn btn-dark" @onclick="@Cancel_Click" value="Back" />*@
+            </div>
+
+        </div>
+
+    </div>
+
+    <ConfirmDialogBox ConfirmationChanged="ConfirmDelete_Click" @ref="DeleteConfirmation"
+                      ModalMessage=@($"Are you sure you want to delete \n Employee Record with Emp. No. - \" {objEmployee.EmployeeNumber} \" ? ") ModalButtonText="Delete" ModalTitle="Confirm Delete"></ConfirmDialogBox>
+
+
+        }
+
+
+        @code {
+
+
+
+
+        }

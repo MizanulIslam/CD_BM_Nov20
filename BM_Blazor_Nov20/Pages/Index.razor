@@ -1,0 +1,64 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+@inject UserManager<ApplicationUser> UserManager
+
+@using BM_Blazor_Nov20.Models;
+@using BM_Models;
+@using Microsoft.AspNetCore.Identity;
+
+<h1>Welcome to BM .</h1>
+
+
+
+
+Welcome to your new Client app.
+
+
+
+<button class="btn btn-primary" @onclick="MethodToTriggerUrl">Click me</button>
+
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+
+    public string userName = "";
+    public string cs = "";
+
+    public string urlMulti = "http://localhost:59261/";
+    private readonly UserManager<ApplicationUser> _userManager;
+    ApplicationIdentity identity;
+    ApplicationUser vvv;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+            vvv = await UserManager.FindByNameAsync(httpContextAccessor.HttpContext.User.Identity.Name);
+
+            userName = vvv.UserName;
+            
+
+        }
+
+    }
+    void MethodToTriggerUrl()
+    {
+        // identity.FullName
+
+        NavigationManager.NavigateTo(urlMulti + $"{userName}/{cs}", true);
+
+    }
+    //NavigationManager.NavigateTo  ("http://localhost:62084/", true);
+
+}
+}

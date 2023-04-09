@@ -1,0 +1,31 @@
+﻿@page "/level"
+
+
+Level Test Page
+
+
+<AuthorizeView Roles="L1">
+    <h3>L1</h3>
+
+</AuthorizeView>
+
+
+<AuthorizeView Roles="admin">
+    <h3>admin</h3>
+
+</AuthorizeView>
+
+<AuthorizeView Roles="L-3">
+    <h3>L3</h3>
+
+</AuthorizeView>
+
+<AuthorizeView >
+    <h3>logged</h3>
+
+</AuthorizeView>
+
+
+    @code {
+
+    }

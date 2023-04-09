@@ -1,0 +1,136 @@
+﻿
+@page "/EditCompany/{Id}"
+
+@using BM_Blazor_Nov20.Data
+@using BM_Models
+@inject CompanyServices  objCompanyServices
+@inject NavigationManager objNavigationManager
+@attribute [Authorize]
+
+<h3>Edit Company</h3>
+<hr />
+
+<form>
+    @if (objCompany == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group form-inline">
+                    <label for="Name" class="col-md-3 "> Name</label>
+
+                    <input form="Name" class="form-control col-md-5" @bind="@objCompany.Name" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="BillingAddress" class="control-label col-md-3">Billing Address</label>
+                    <textarea type="text" form="BillingAddress" class="form-control col-md-5" @bind="@objCompany.BillingAddress" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="City" class="control-label col-md-3">City</label>
+                    <input form="City" class="form-control col-md-5" @bind="@objCompany.City" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="Country" class="control-label col-md-3">Country</label>
+                    <input form="Country" class="form-control col-md-5" @bind="@objCompany.Country" />
+                </div>
+
+                <div class="form-group form-inline">
+                    <label for="Country" class="control-label col-md-3">Contact Name</label>
+                    <input form="Country" class="form-control col-md-5" @bind="@objCompany.ContactPerson" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="Country" class="control-label col-md-3">Contact Title</label>
+                    <input form="Country" class="form-control col-md-5" @bind="@objCompany.ContactTitle" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="Country" class="control-label col-md-3">Contact Number</label>
+                    <input form="Country" class="form-control col-md-5" @bind="@objCompany.ContactNumber" />
+                </div>
+                <div class="form-group form-inline">
+                    <label for="Country" class="control-label col-md-3">Email.ID</label>
+                    <input form="Country" class="form-control col-md-5" @bind="@objCompany.EmailID" />
+
+                    </div>
+
+                    <div class="form-group form-inline">
+                        <label for="BusinessID" class="control-label col-md-3">Business ID ( GST/ VAT)</label>
+                        <input form="BusinessID" class="form-control col-md-5" @bind="@objCompany.BusinessID" />
+                    </div>
+
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group offset-md-3">
+                    <input type="button" class="btn btn-success" @onclick="@UpdateCompany" value="Save" />
+                    <input type="button" class="btn btn-dark" @onclick="@Details" value="Details" />
+                    <input type="button" class="btn btn-outline-dark" @onclick="@Cancel" value="Back" />
+                </div>
+
+            </div>
+            @if (answer == true)
+            {
+                <div class="alert" role="alert" aria-live="assertive" aria-atomic="true">
+
+                    <div class="toast-body bg-success">
+                        @message
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <label>@message</label>
+            }
+        </div>
+
+    }
+</form>
+
+
+@code {
+
+
+
+    [Parameter]
+    public string Id { get; set; }
+
+
+    private Company objCompany;
+
+    protected override async Task OnInitializedAsync()
+    {
+        objCompany = await Task.Run(() => objCompanyServices.GetCompany(Id));
+    }
+
+    public bool answer = false;
+    public string message = "";
+
+    protected void UpdateCompany()
+    {
+
+        objCompany.DateLastModified = DateTime.UtcNow;
+        answer = objCompanyServices.UpdateCompany(objCompany);
+        if (answer == true)
+        {
+            message = " Saved Successfully ";
+        }
+
+    }
+
+    void Cancel()
+    {
+        objNavigationManager.NavigateTo("Companies");
+
+    }
+    void Details()
+    {
+        var url = "DetailsCompany/" + Id + "";
+        objNavigationManager.NavigateTo(url);
+
+    }
+}

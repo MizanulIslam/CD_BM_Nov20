@@ -1,0 +1,61 @@
+﻿@page "/counter"
+
+<AuthorizeView>
+    <Authorized>
+        <h1>Counter</h1>
+
+        <p>Current count: @currentCount</p>
+
+        <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+        <button class="btn btn-primary" @onclick="ShowAlert">Click me</button>
+        @if (showalert == true)
+        {
+            <div class=" card">
+                <div class="card-body ">
+
+                    @testString
+                </div>
+            </div>
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <button type="button" class="close" @onclick="ShowAlert">
+                        &times;
+                    </button>
+                    @testString
+                </div>
+            </div>
+        }
+
+
+    </Authorized>
+    <NotAuthorized>
+        <RedirectLogin></RedirectLogin>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    private int currentCount = 0;
+    private bool showalert = false;
+    public string testString = "original";
+
+    private void IncrementCount()
+    {
+        currentCount++;
+        testString = "count inreased";
+
+    }
+
+    private void ShowAlert()
+    {
+        if (showalert == false)
+        {
+
+            showalert = true;
+        }
+        else
+            showalert = false;
+
+    }
+
+}

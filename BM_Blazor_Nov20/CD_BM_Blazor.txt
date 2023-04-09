@@ -1,0 +1,6 @@
+
+26-Nov-2020
+. Companies link added to Nav Bar
+. TenantDbContext and Connection String Added to the Register Page
+. TenantDbContext and Connection String Added to the Login Page
+. CompanyServices -- get data via the LL and DL.

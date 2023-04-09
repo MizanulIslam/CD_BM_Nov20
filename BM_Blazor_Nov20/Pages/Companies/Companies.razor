@@ -1,0 +1,76 @@
+﻿@page "/Companies"
+@using BM_Models
+@using BM_Blazor_Nov20.Data
+@inject CompanyServices  CompanyServiceObject
+@attribute [Authorize]
+
+
+
+<h3>
+
+   <em>
+       Companies
+   </em> 
+    <a class="btn btn-info" href="CreateCompanies">
+        <span class="oi oi-plus"></span> New
+    </a>
+</h3>
+
+    @*<NavLink class="nav-link btn " href="CreateCompanies">
+        <span class="oi oi-plus" aria-hidden="true"></span>New
+    </NavLink>*@
+
+    @if (companies == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table table-borderless table-responsive-md table-striped">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Company Name</th>
+                    <th>City</th>
+                    <th>#Order</th>
+                    <th>#Invoice</th>
+                    <th>Balance Amount</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var company in companies)
+                {
+                <tr>
+                    <td>
+                        <div class="btn-group-sm ">
+                            <a class="btn btn-secondary " href="EditCompany/@company.CompanyId">
+                                <span class="oi oi-pencil"></span> Edit
+                            </a>
+                            <a type="" class="btn  btn-secondary" href="DetailsCompany/@company.CompanyId">
+                                <span class="oi oi-eye" aria-hidden="true"></span> Details
+                            </a>
+                        </div>
+                        
+                       
+                    </td>
+
+                    <td>@company.Name</td>
+                    <td>@company.City</td>
+                    <td>@company.OrderCount</td>
+                    <td>@company.InvoiceCount</td>
+                    <td>@company.BalanceAmount</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @code {
+        private Company[] companies;
+
+        protected override async Task OnInitializedAsync()
+        {
+            companies = await CompanyServiceObject.GetCompanyAsync();
+        }
+    }

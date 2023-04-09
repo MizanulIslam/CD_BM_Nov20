@@ -1,0 +1,138 @@
+﻿
+@page "/edituser/{Id}"
+@*<h3>Edit User</h3>*@
+@inherits EditUserBase
+@using Blazored.FluentValidation
+
+@using BlazorComponents
+
+@attribute [Authorize(Roles ="admin")]
+
+@if (objEditUserUIM == null)
+{
+    <div class="spinner"></div>
+
+}
+else
+{
+    <EditForm Model="@objEditUserUIM" OnValidSubmit="@HandleValidSubmit">
+
+        <FluentValidationValidator></FluentValidationValidator>
+
+        <FluentValidationValidator DisableAssemblyScanning="@true" />
+
+
+        <h3>
+            <em>
+                Edit User
+            </em>
+
+        </h3>
+
+        <div class="col-sm-5">
+            <StatusMessage Model="@MessageString"></StatusMessage>
+            <ValidationSummary></ValidationSummary>
+
+        </div>
+
+        <div class="form-group">
+
+
+            <div class="col-sm-3">
+                <label for="username" class="col-form-label">
+                    User Name
+                </label>
+
+                <InputText id="UserName" class="form-control" placeholder=" user name (required) "
+                           @bind-Value="@objEditUserUIM.UserName" />
+
+            </div>
+            <div class="col-sm-3">
+                <label for="email" class="col-form-label">
+                    Email-ID
+                </label>
+
+                <InputText id="Email_ID" class="form-control" placeholder=" email-Id (required) "
+                           @bind-Value="@objEditUserUIM.Email" />
+
+            </div>
+            <div class="col-sm-3">
+                <label for="pnumber" class="col-form-label">
+                    Phone Number
+                </label>
+
+                <InputText id="phonenumber" class="form-control" placeholder=" phonenumber "
+                           @bind-Value="@objEditUserUIM.PhoneNumber" />
+
+            </div>
+
+
+        </div>
+
+        <div class="card-deck">
+
+            <div class="card ">
+                <div class="card-header">
+                    <h3> Roles</h3>
+                </div>
+                <div class="card-body">
+                    @if (objEditUserUIM.Roles.Any())
+                    {
+                        foreach (var role in objEditUserUIM.Roles)
+                        {
+                            <h5 class="card-title">@role</h5>
+                        }
+                    }
+                    else
+                    {
+                        <h5 class="card-text">None at the moment</h5>
+                    }
+                </div>
+                <div class="card-footer">
+                    <a href="/editroles/@objEditUserUIM.Id" style="width:auto" class="btn btn-secondary">
+                        Manage Roles
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Claims</h3>
+                </div>
+                <div class="card-body">
+                    @if (objEditUserUIM.Claims.Any())
+                    {
+                        foreach (var role in objEditUserUIM.Claims)
+                        {
+                            <h5 class="card-text">@role</h5>
+                        }
+                    }
+                    else
+                    {
+                        <h5 class="card-title">None at the moment</h5>
+                    }
+                </div>
+                <div class="card-footer">
+                    <a href="#" style="width:auto" class="btn btn-secondary">
+                        Manage Claims
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="">
+
+            <input type="submit" class="btn btn-secondary" value="@SaveButtonText" />
+            <input type="button" class="btn btn-secondary" @onclick="@Details_Click" value="@DetailsButtonText" />
+            <input type="button" class="btn btn-danger" @onclick="@Delete_Click" value="@DeleteButtonText" />
+
+        </div>
+
+
+    </EditForm>
+
+
+
+}

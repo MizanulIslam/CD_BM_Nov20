@@ -1,0 +1,62 @@
+﻿@page "/editroles/{Id}"
+@inherits EditRolesBase
+
+@attribute [Authorize(Roles = "admin")]
+
+@using BlazorComponents
+
+
+
+
+
+
+    @if (objRole == null)
+    {
+        <div class="spinner"></div>
+
+    }
+    else
+    {
+        <EditForm Model="@objRole" OnValidSubmit="@HandleValidSubmit">
+
+
+            <h3>
+                <em>Edit Roles </em>
+
+            </h3>
+
+            <div class="col-sm-5">
+                <StatusMessage Model="@MessageString"></StatusMessage>
+                <ValidationSummary></ValidationSummary>
+
+            </div>
+
+            <div class="form-group row">
+
+
+                <div class="col-sm-3">
+                    <label for="firstName" class="col-form-label">
+                        Name
+                    </label>
+
+                    <InputText id="RoleName" class="form-control" placeholder=" role name (required) "
+                               @bind-Value="@objRole.Name" />
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="">
+
+                <input type="submit" class="btn btn-secondary" value="@SaveButtonText" />
+                <input type="button" class="btn btn-secondary" @onclick="@Details_Click" value="@DetailsButtonText" />
+                <input type="button" class="btn btn-danger" @onclick="@Delete_Click" value="@DeleteButtonText" />
+
+            </div>
+
+
+        </EditForm>
+    }

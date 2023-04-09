@@ -1,0 +1,313 @@
+﻿@page "/EditEmployee/{Id}"
+
+@using BM_Models
+@using BM_Models.Validator
+@using Blazored.FluentValidation
+
+
+@inherits EditEmployeeBase
+@attribute [Authorize]
+
+
+
+<EditForm Model="@objEditEmployeeModel" OnValidSubmit="@HandleValidSubmit">
+    <em>
+
+        <h4 style="color:#9a9a9a ;text-shadow:1px 1px 1px #777;">Employee</h4>
+    </em>
+
+    <FluentValidationValidator></FluentValidationValidator>
+
+    <FluentValidationValidator DisableAssemblyScanning="@true" />
+
+    <hr />
+
+    @*<ValidationSummary></ValidationSummary>*@
+
+    <div class="form-group row">
+
+
+        @*<p>
+                <label>First Name: </label>
+                <InputText  class="form-control" @bind-Value="@objEditEmployeeModel.FirstName" />
+                <ValidationMessage For="(() => objEditEmployeeModel.FirstName)" />
+            </p>*@
+
+        <label for="firstName" class="col-sm-2 col-form-label">
+            Name
+        </label>
+        @*<div class="col-sm-1">
+                <InputText id="Title" class="form-control" placeholder="Title"
+                           @bind-Value="objEditEmployeeModel.TitleOfCourtesy" />
+            </div>*@
+        <div class="col-sm-3">
+            <InputText id="firstName" class="form-control" placeholder=" first name (Required) "
+                       @bind-Value="@objEditEmployeeModel.FirstName" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.FirstName)" />
+
+
+
+        </div>
+        <div class="col-sm-3">
+            <InputText id="lastname" class="form-control" placeholder="last name"
+                       @bind-Value="objEditEmployeeModel.LastName" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.LastName)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="code" class="col-sm-2 col-form-label">
+            Employee No.
+        </label>
+        <div class="col-sm-6">
+            @*<h6>
+                    @objEditEmployeeModel.EmployeeNumber
+                </h6>*@
+            <InputNumber readonly id="code" class="form-control" placeholder="employee number"
+                         @bind-Value="objEditEmployeeModel.EmployeeNumber" />
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="contactNo" class="col-sm-2 col-form-label">
+            Contact Number
+        </label>
+        <div class="col-sm-6">
+            <InputText id="contactNo" class="form-control" placeholder="phone number"
+                       @bind-Value="objEditEmployeeModel.ContactNumber" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.ContactNumber)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">
+            Email-ID
+        </label>
+        <div class="col-sm-6">
+            <InputText id="email" class="form-control" placeholder="email-id"
+                       @bind-Value="objEditEmployeeModel.EmailID" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.EmailID)" />
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="hireDate" class="col-sm-2 col-form-label">
+            Joining Date
+        </label>
+        <div class="col-sm-6">
+            <InputDate id="hireDate" class="form-control" placeholder="date of joining"
+                       @bind-Value="objEditEmployeeModel.HireDate" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.HireDate)" />
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="branch" class="col-sm-2 col-form-label">
+            Branch
+        </label>
+        <div class="col-sm-6">
+            <InputText id="branch" class="form-control" placeholder="branch"
+                       @bind-Value="objEditEmployeeModel.Region" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.Region)" />
+        </div>
+    </div>
+
+
+
+    <hr />
+
+
+    <div class="form-group row">
+        <label for="address" class="col-sm-2 col-form-label">
+            Address
+        </label>
+        <div class="col-sm-6">
+            <InputTextArea id="address" class="form-control" placeholder="home address"
+                           @bind-Value="objEditEmployeeModel.Address" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.Address)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="birtDate" class="col-sm-2 col-form-label">
+            Date of Birth
+        </label>
+        <div class="col-sm-6">
+            <InputDate id="birtDate" class="form-control" placeholder="birthday"
+                       @bind-Value="objEditEmployeeModel.BirthDate" />
+            <ValidationMessage For="@(() => objEditEmployeeModel.BirthDate)" />
+        </div>
+    </div>
+
+
+    <hr />
+
+
+    @* Extra Employee Details
+
+
+
+
+
+
+
+
+
+        <div class="form-group row">
+            <label for="level" class="col-sm-2 col-form-label">
+                Job Level
+            </label>
+            <div class="col-sm-6">
+                <InputText id="level" class="form-control" placeholder="Job level"
+                           @bind-Value="objEditEmployeeModel.Joblevel" />
+                <ValidationMessage For="@(() => objEditEmployeeModel.Joblevel)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="jobTitle" class="col-sm-2 col-form-label">
+                Job Title
+            </label>
+            <div class="col-sm-6">
+                <InputText id="jobTitle" class="form-control" placeholder="Job Title"
+                           @bind-Value="objEditEmployeeModel.JobTitle" />
+                <ValidationMessage For="@(() => objEditEmployeeModel.JobTitle)" />
+            </div>
+        </div>
+
+
+
+
+
+                   <div class="form-group row">
+                <label for="employeehead" class="col-sm-2 col-form-label">
+                    Reports To
+                </label>
+                <div class="col-sm-6">
+                    <InputSelect id="employeehead" @bind-Value="EmployeHeadID" class="form-control">
+                        @foreach (var emp in objEmployeeList)
+                        {
+                            <option value="@emp.EmployeeID">@emp.TitleOfCourtesy @emp.FirstName @emp.LastName</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group row">
+                <label for="gender" class="col-sm-2 col-form-label">
+                    Gender
+                </label>
+                <div class="col-sm-6">
+
+
+                    <InputSelect id="gender" class="form-control" @bind-Value="@objEditEmployeeModel.Gender">
+                        @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                        {
+                            <option value="@gender">@gender</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+                     <div class="form-group row">
+                    <label for="homephone" class="col-sm-2 col-form-label">
+                        Home Contact
+                    </label>
+                    <div class="col-sm-6">
+                        <InputText id="homephone" class="form-control" placeholder="Home Phone"
+                                   @bind-Value="objEditEmployeeModel.HomePhone" />
+                        <ValidationMessage For="@(() => objEditEmployeeModel.HomePhone)" />
+                    </div>
+                </div>
+
+
+
+                    <div class="form-group row">
+                        <label for="PhotoPath" class="col-sm-2 col-form-label">
+                            PhotoPath
+                        </label>
+                        <div class="col-sm-6">
+                            <InputText id="PhotoPath" class="form-control" placeholder="PhotoPath"
+                                       @bind-Value="objEditEmployeeModel.PhotoPath" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="Notes" class="col-sm-2 col-form-label">
+                            Notes
+                        </label>
+                        <div class="col-sm-6">
+                            <InputTextArea id="Notes" class="form-control" placeholder="Remarks"
+                                           @bind-Value="objEditEmployeeModel.Notes" />
+                            <ValidationMessage For="@(() => objEditEmployeeModel.Notes)" />
+                        </div>
+                    </div>
+
+
+
+    *@
+
+
+
+
+    <div class="row">
+        <div class=" col-sm-10">
+
+            <div class="">
+                <button type="submit" class="btn btn-success">
+                    <span class="oi  oi-check" aria-hidden="true"></span> @ButtonText
+                </button>
+                @* <input type="submit" class="btn btn-primary" @onclick="@Save" value="Save" />*@
+                @*<input type="button" class="btn btn-danger" @onclick="@Delete_Click" value="Delete" />*@
+                @*<input type="button" class="btn btn-secondary" @onclick="@Details_Click" value="View"  />*@
+                <a type="" class="btn  btn-secondary" href="EmployeeDetails/@Id">
+                    <span class="oi oi-eye" aria-hidden="true"></span> View
+                </a>
+                @if (showalert == true)
+                {
+
+                    <div class="row card  col-sm-6 float-right">
+                        <div class="card-body ">
+                            <button type="button" class="close" @onclick="ShowAlert">
+                                &times;
+                            </button>
+                            @MessageString
+                        </div>
+                    </div>
+                }
+                @*@if (MessageString == null) { }
+                    else
+                    {
+
+
+                        <div class="alert alert-info alert-dismissible fade">
+                            @MessageString
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                        </div>
+                    }*@
+
+
+                @*<input type="button" class="btn btn-dark" @onclick="@Cancel_Click" value="Back" />*@
+
+                <br />
+                <br />
+            </div>
+
+        </div>
+
+    </div>
+
+</EditForm>
+

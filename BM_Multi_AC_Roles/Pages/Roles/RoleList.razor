@@ -1,0 +1,75 @@
+﻿@page "/roles"
+@inherits RoleListBase
+@using BlazorComponents
+@attribute [Authorize]
+<h3>
+    <em>
+        Roles
+    </em>
+    <a class="btn btn-secondary" href="/editroles/new">
+        <span class="oi oi-plus"></span> New
+    </a>
+</h3>
+
+@if (paginatedList.Items == null)
+{
+    <div class="spinner"></div>
+
+}
+else
+{
+    <table class="table table-borderless table-responsive-md table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th><span @onclick="@(() => Sort("Name"))">Role Name </span><i class="@(SortIndicator("Name"))"></i></th>
+
+
+
+
+
+                @*<th><span @onclick="@(() => Sort("Id"))">UserName </span> <i class="@(SortIndicator("Id"))"></i></th>*@
+                @* <th><span @onclick="@(() => Sort("FirstName"))">Name </span><i class="@(SortIndicator("FirstName"))"></i></th>*@
+                @*<th>Name</th>*@
+                @*<th>Email-ID</th>*@
+                @*<th>Branch</th>*@
+                @*   <th><span @onclick="@(() => Sort("Region"))">Branch </span><i class="@(SortIndicator("Region"))"></i></th>*@
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in paginatedList.Items)
+            {
+                <tr>
+
+                    <td>
+                        <div class="btn-group-sm ">
+                            <a class="btn btn-secondary " href="editroles/@employee.Id">
+                                <span class="oi oi-pencil"></span> Edit
+                            </a>
+                            <a type="" class="btn  btn-secondary" href="/@employee.Id">
+                                <span class="oi oi-eye" aria-hidden="true"></span> Details
+                            </a>
+                        </div>
+
+
+                    </td>
+
+                    <td>@employee.Name</td>
+
+
+
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+
+    <Pager PageIndex=@paginatedList.PageIndex TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+           HasNextPage=@paginatedList.HasNextPage HasPreviousPage=@paginatedList.HasPreviousPage>
+    </Pager>
+
+}
+
